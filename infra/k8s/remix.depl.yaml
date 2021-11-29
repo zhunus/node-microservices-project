@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remix-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: remix
+  template:
+    metadata:
+      labels:
+        app: remix
+    spec:
+      containers:
+        - name: remix
+          image: zhunus/remix
+          env:
+            - name: BASE_URL
+              value: https://ingress-nginx-controller.ingress-nginx.svc.cluster.local
+            - name: NODE_TLS_REJECT_UNAUTHORIZED
+              value: "0"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: remix-srv
+spec:
+  selector:
+    app: remix
+  ports:
+    - name: remix
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

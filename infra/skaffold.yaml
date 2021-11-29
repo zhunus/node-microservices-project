@@ -1,0 +1,50 @@
+apiVersion: skaffold/v2beta25
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - "./infra/k8s/*.yaml"
+build:
+  local:
+    push: false
+  artifacts:
+    - image: zhunus/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: zhunus/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: zhunus/remix
+      context: remix
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "app/**/*"
+            dest: .
+    - image: zhunus/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: zhunus/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
