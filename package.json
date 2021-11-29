@@ -1,0 +1,8 @@
+{
+  "name": "@gzhtickets/node-microservices-project",
+  "workspaces": ["./packages/*"],
+  "devDependencies": {
+    "prettier": "^2.5.0",
+    "typescript": "^4.5.2"
+  }
+}
