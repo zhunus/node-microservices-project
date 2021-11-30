@@ -3,13 +3,13 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - "./infra/k8s/*.yaml"
+      - "./k8s/*.yaml"
 build:
   local:
     push: false
   artifacts:
     - image: zhunus/auth
-      context: auth
+      context: ../packages/auth
       docker:
         dockerfile: Dockerfile
       sync:
@@ -17,7 +17,7 @@ build:
           - src: "src/**/*.ts"
             dest: .
     - image: zhunus/client
-      context: client
+      context: ../packages/client
       docker:
         dockerfile: Dockerfile
       sync:
@@ -25,7 +25,7 @@ build:
           - src: "**/*.js"
             dest: .
     - image: zhunus/remix
-      context: remix
+      context: ../packages/remix
       docker:
         dockerfile: Dockerfile
       sync:
@@ -33,7 +33,7 @@ build:
           - src: "app/**/*"
             dest: .
     - image: zhunus/tickets
-      context: tickets
+      context: ../packages/tickets
       docker:
         dockerfile: Dockerfile
       sync:
@@ -41,7 +41,7 @@ build:
           - src: "src/**/*.ts"
             dest: .
     - image: zhunus/orders
-      context: orders
+      context: ../packages/orders
       docker:
         dockerfile: Dockerfile
       sync:
